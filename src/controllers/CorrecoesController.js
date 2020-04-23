@@ -16,31 +16,31 @@ module.exports={
         // console.log(id);
 
         // const [Tid] = await connection('titulos').insert({
-        //     titulo_id: "186",
         //     titulo: "Chave de correção 1",
         //     correcoes_id: id,
 
         // });
         // console.log(Tid);
+ 
         // await connection('opcoes').insert([{
         //     valor: "0",
         //     descricao: "Certo",
-        //     titulo_id: Tid
+        //     titulo_id: id
         // },
         // {
         //     valor: "1",
         //     descricao: "Errado",
-        //     titulo_id: Tid
+        //     titulo_id: id
         // }]);
          
 
 
-        const correcoes = await connection('titulos')
-            .join('correcoes', 'correcoes.id', '=', 'titulos.correcoes_id')
-            .join('opcoes', 'opcoes.titulo_id', '=', 'titulos.id')
-            // .where('correcoes.situacao', situacao).andWhere(MIN('correcoes.ordem'))
-            .select(
-                '*');
+        // const correcoes = await connection('titulos')
+        //     .join('correcoes', 'correcoes.id', '=', 'titulos.correcoes_id')
+        //     .join('opcoes', 'opcoes.titulo_id', '=', 'titulos.id')
+        //     // .where('correcoes.situacao', situacao).andWhere(MIN('correcoes.ordem'))
+        //     .select(
+        //         '*');
 
     //     if (correcoes = null) {
     //         const correcoes_reservadas = await connection('titulos')
@@ -63,16 +63,17 @@ module.exports={
     //         return response.json(correcoes_reservadas);
     //     }
 
-        return response.json(correcoes);
+        // return response.json(correcoes);
 
     },
     async alter(request, response) {
-    const {id ,valor} = request.boby;
+    const {id ,valor} = request.body;
+    const situacao = 'DISPONIVEL'
 
     const correcao = await connection('titulos')
                 .join('correcoes', 'correcoes.id', '=', 'titulos.correcoes_id')
                 .join('opcoes', 'opcoes.titulo_id', '=', 'titulos.id')
-                .where()
+                .where('titulos.titulo_id', id ).select('*');
 
     }
 };
